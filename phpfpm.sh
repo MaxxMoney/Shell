@@ -4,7 +4,24 @@ install_php() {
 [ ! -f /etc/yum.repos.d/epel.repo ] && curl -L http://mirrors.aliyun.com/repo/epel-7.repo -o /etc/yum.repos.d/epel.repo
 yum -y install https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
-yum install -y php72w-fpm php72w-pear
+echo "a php5.6"
+echo "b php7.0"
+echo "c php7.2"
+read -p "Choose a version[a|b|c]: " ver
+case $ver in
+  a)
+  yum install -y php56w-fpm php56w-pear
+  ;;
+  b)
+  yum install -y php70w-fpm php70w-pear
+  ;;
+  c)
+  yum install -y php72w-fpm php72w-pear
+  ;;
+  *)
+  echo "Error. Please type [a|b|c]"
+  ;;
+esac
 }
 
 config_php() {
