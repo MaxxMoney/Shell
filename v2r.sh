@@ -17,7 +17,21 @@ systemctl disable postfix && systemctl stop postfix && yum remove -y postfix
 setenforce 0
 sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
 timedatectl set-timezone Asia/Shanghai
-yum -y install unzip
+yum -y install unzip vim bash-completion
+
+read -p "Select your sshd port to be modified[default 1438]: " sshport
+if [ -z $sshport ];then
+  sshport=1438
+fi
+
+if [ $sshport -le 1024 ] || [ $sshport -ge 65535 ];then
+  echo "Invalid, please choose [1025-65534]."
+  exit 1
+fi
+
+sed -i "/Port 22/a\Port ${sshport}" /etc/ssh/sshd_config
+systemctl reload sshd
+echo "Successfully modified the sshd port."
 }
 
 install_nginx() {
