@@ -8,11 +8,11 @@ plain='\033[0m'
 init_fail2ban() {
 [ -z "`grep '^Port' /etc/ssh/sshd_config`" ] && ssh_port=22 || ssh_port=$(grep '^Port' /etc/ssh/sshd_config | awk '{print $2}')
 
-read -p "Type the maxium try time:" maxretry
+read -p "Type the maxium try time[default 3]:" maxretry
 if [ -z "$maxretry" ];then
   maxretry=3
 fi
-read -p "type bantime[seconds]:" bantime
+read -p "Type bantime[seconds, default 86400]:" bantime
 if [ -z "$bantime" ];then
   bantime=86400
 fi

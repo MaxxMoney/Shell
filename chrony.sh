@@ -33,14 +33,14 @@ echo '
 #####################################
 ## Edit file /tmp/chrony_inventory ##
 #####################################'
-read -p "Have you writed hosts on /tmp/chrony_inventory?(y/n) " is
+read -p "Have you writed hosts on /tmp/chrony_inventory and finished ssh-copy-id? (y/n) " is
 if [[ ${is} == 'y' || ${is} == 'Y' ]];then
   ansible all -i /tmp/chrony_inventory -m yum -a "name=chrony state=present" && \
   ansible all -i /tmp/chrony_inventory -m copy -a "src=/tmp/chrony_client.conf dest=/etc/chrony.conf force=yes" && \
   ansible all -i /tmp/chrony_inventory -m service -a "name=chronyd state=started enabled=yes"
   rm -f /tmp/chrony_client.conf
 else
-  echo "Error."
+  echo "Exit the client installation."
   exit 1
 fi
 
