@@ -13,8 +13,8 @@ mysql -uroot -p${passwd1} -e "Grant all privileges on zabbix.* to 'zabbix'@'loca
 mysql -uroot -p${passwd1} -e "flush privileges;"
 
 [ -n "`rpm -qa | grep php`" ] && rpm -qa | grep php | xargs yum -y remove
-[ ! -f /etc/yum.repos.d/epel.repo ] && curl -L http://mirrors.aliyun.com/repo/epel-7.repo -o /etc/yum.repos.d/epel.repo
 yum -y install https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+rm -f /etc/yum.repos.d/epel.repo && curl -L http://mirrors.aliyun.com/repo/epel-7.repo -o /etc/yum.repos.d/epel.repo
 yum -y install php72w php72w-cli php72w-common php72w-bcmath php72w-gd \
                php72w-ldap php72w-mbstring php72w-mysql php72w-pdo php72w-xml
 
@@ -50,5 +50,5 @@ sed -i 's@# php_value date.timezone.*@php_value date.timezone = Asia/Shanghai@' 
 systemctl enable zabbix-server zabbix-agent httpd
 systemctl start zabbix-server zabbix-agent httpd
 
-echo "Zabbix installed successfully. MySQL password is writed in /tmp/mysql_passwd."
-echo "Please visit http://ip/zabbix"
+echo -e "\033[32mZabbix installed successfully. MySQL password is writed in /tmp/mysql_passwd.\033[0m"
+echo -e "\033[32mPlease visit http://ip/zabbix\033[0m"
