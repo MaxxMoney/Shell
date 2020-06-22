@@ -14,6 +14,7 @@ uname=$(uname -r)
 version=$(grep "^menuentry" /boot/grub2/grub.cfg | cut -d "'" -f2 | awk 'NR==1' | egrep -v "${uname}|rescue")
 if [[ -n $version ]];then
   grub2-set-default 0
+  #grub2-mkconfig -o /boot/grub2/grub.cfg   #有的云服务器需要再加这条命令才生效
   echo -e "\033[32mBoot changed successfully.\033[0m\n"
 else
   echo -e "\033[31mNew kernel is not in the first place, please change boot manually.\033[0m\n"
